@@ -73,7 +73,7 @@ const Pay = () => {
       merchantId: "PGTESTPAYUAT93",
       merchantTransactionId: transactionid,
       merchantUserId: 'MUID-' + uuidv4().toString(36).slice(-6),
-      amount: (amount * 100),
+      amount: customAmount? (customAmount*100): (amount * 100),
       redirectUrl: `http://localhost:3000/api/status/${transactionid}`,
       redirectMode: "POST",
       callbackUrl: `http://localhost:3000/api/status/${transactionid}`,
