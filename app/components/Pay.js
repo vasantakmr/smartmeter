@@ -14,58 +14,31 @@ const Pay = () => {
   const [mobileNumber, setMobileNumber] = useState('');
   const [amount, setAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
-  const [errors, setErrors] = useState({});
-
 
   const handleMobileNumberChange = (e) => {
     setMobileNumber(e.target.value);
   };
 
-
   const handleRadioChange = (e) => {
     setAmount(e.target.value);
     setCustomAmount(''); // Clear custom amount on radio selection
-    setErrors({ ...errors, customAmount: '' }); // Clear custom amount error
   };
 
   const handleCustomAmountChange = (e) => {
     setCustomAmount(e.target.value);
-    if(amount) {
-      console.log(".amount" + amount);
-      document.querySelector("#amount" + amount).checked = false;
-    }
-    setAmount(''); // Clear radio button selection on custom amount entry
-    setErrors({ ...errors, amount: '' }); // Clear radio button error
+
+    // setAmount(''); // Clear radio button selection on custom amount entry
   };
 
   const makePayment = async (e) => {
 
     e.preventDefault();
 
-    const errorMessages = {};
-    if (isNaN(mobileNumber)) {
-      errorMessages.amount = 'Please enter a valid mobile number.';
+    if (!amount) {
+      setAmount(customAmount)
     }
-
-    if (!amount && !customAmount) {
-      errorMessages.amount = 'Please select a recharge amount or enter a custom amount.';
-    }
-
-    if (customAmount && isNaN(customAmount)) {
-      errorMessages.customAmount = 'Please enter a valid custom amount.';
-    }
-
-    setErrors(errorMessages);
-
-    if (Object.keys(errorMessages).length === 0) {
-      if(!amount) {
-        setAmount(customAmount)
-      }
-      // Submit form data (amount and customAmount) using appropriate methods (e.g., fetch)
-      console.log('Submitting form:', { mobileNumber, amount, customAmount });
-    } else {
-      return;
-    }
+    // Submit form data (amount and customAmount) using appropriate methods (e.g., fetch)
+    console.log('Submitting form:', { mobileNumber, amount, customAmount });
 
     const transactionid = "Tr-" + uuidv4().toString(36).slice(-6);
 
@@ -73,8 +46,8 @@ const Pay = () => {
       merchantId: "PGTESTPAYUAT93",
       merchantTransactionId: transactionid,
       merchantUserId: 'MUID-' + uuidv4().toString(36).slice(-6),
-      amount: customAmount? (customAmount*100): (amount * 100),
-      redirectUrl: `http://localhost:3000/api/status/${transactionid}`,
+      amount: customAmount ? (customAmount * 100) : (amount * 100),
+      redirectUrl: `http://localhost:3000/success`,
       redirectMode: "POST",
       callbackUrl: `http://localhost:3000/api/status/${transactionid}`,
       mobileNumber: mobileNumber,
@@ -194,22 +167,33 @@ const Pay = () => {
               />
               500
             </label>
+            <label htmlFor="custom">
+              <input
+                type="radio"
+                id="customAmount"
+                name="amount"
+                value="custom"
+                className="w-4 h-4 mr-2"
+                onChange={handleRadioChange}
+              />
+              Custom
+            </label>
           </div>
-          <div className="flex items-center gap-2">
-            <label htmlFor="customAmount">or Enter Custom Amount: </label>
-            <input
-              type="number"
-              id="customAmount"
-              name="customAmount"
-              min="1"
-              className="rounded-md w-3/5 border border-gray-300 p-2"
-              value={customAmount}
-              onChange={handleCustomAmountChange}
-            />
-            {errors.customAmount && <p className="text-red-500">{errors.customAmount}</p>}
-          </div>
-          {errors.amount && <p className="text-red-500">{errors.amount}</p>}
-
+          {amount === 'custom' && (
+            <div className="flex items-center gap-2">
+              <label htmlFor="customAmountInput">Enter Amount: </label>
+              <input
+                type="number"
+                id="customAmountInput"
+                name="customAmount"
+                min="1"
+                className="rounded-md border border-gray-300 p-2"
+                value={customAmount}
+                required
+                onChange={handleCustomAmountChange}
+              />
+            </div>
+          )}
           <div></div>
           <div>
             <button
