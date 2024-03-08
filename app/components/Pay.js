@@ -47,9 +47,9 @@ const Pay = () => {
       merchantTransactionId: transactionid,
       merchantUserId: 'MUID-' + uuidv4().toString(36).slice(-6),
       amount: customAmount ? (customAmount * 100) : (amount * 100),
-      redirectUrl: `http://localhost:3000/success`,
+      redirectUrl: `https://smartmeter-live.vercel.app/success`,
       redirectMode: "POST",
-      callbackUrl: `http://localhost:3000/api/status/${transactionid}`,
+      callbackUrl: `http://smartmeter-live.vercel.app/api/status/${transactionid}`,
       mobileNumber: mobileNumber,
       paymentInstrument: {
         type: "PAY_PAGE",
