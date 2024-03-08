@@ -15,6 +15,8 @@ export async function POST(req, res) {
   // console.log(st)
   const dataSha256 = sha256(st);
 
+  console.log("____________________________________________________________________________________________________________________________________________________")
+  console.log(merchantId, transactionId, st, status)
   const checksum = dataSha256 + "###" + process.env.NEXT_PUBLIC_SALT_INDEX;
   console.log(checksum);
 
@@ -31,6 +33,7 @@ export async function POST(req, res) {
       "X-MERCHANT-ID": `${merchantId}`,
     },
   };
+  console.log("____________________________________________________________________________________________________________________________________________________")
 
   // CHECK PAYMENT STATUS
   const response = await axios.request(options);
