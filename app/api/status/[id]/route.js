@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import sha256 from "crypto-js/sha256";
 import axios from "axios";
 
+const HOST_URL = "http://localhost"
+
 export async function POST(req, res) {
   const data = await req.formData();
   console.log(data);
@@ -17,7 +19,7 @@ export async function POST(req, res) {
 
   console.log("____________________________________________________________________________________________________________________________________________________")
   console.log(merchantId, transactionId, st, status)
-  const checksum = dataSha256 + "###" + process.env.NEXT_PUBLIC_SALT_INDEX;
+  const checksum = dataSha256 + "###" + "1";
   console.log(checksum);
 
 
@@ -41,10 +43,10 @@ export async function POST(req, res) {
 
 
   if (response.data.code == "PAYMENT_SUCCESS")
-    return NextResponse.redirect("https://smartmeter-live.vercel.app/success", {
+    return NextResponse.redirect(HOST_URL + "/success", {
       status: 301,
     });
-  else return NextResponse.redirect("https://smartmeter-live.vercel.app/failure", {
+  else return NextResponse.redirect(HOST_URL + "/failure", {
     // a 301 status is required to redirect from a POST to a GET route
     status: 301,
   });

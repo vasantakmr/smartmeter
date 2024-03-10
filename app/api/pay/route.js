@@ -3,7 +3,7 @@ import sha256 from "crypto-js/sha256";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 
-const HOST_URL = "http://localhost:3000"
+const HOST_URL = "http://localhost"
 
 export async function POST(req, res) {
 

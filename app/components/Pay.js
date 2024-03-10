@@ -7,7 +7,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 
 
-const HOST_URL = "http://localhost:3000"
+const HOST_URL = "http://localhost"
 
 const Pay = () => {
 
