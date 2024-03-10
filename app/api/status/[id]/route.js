@@ -11,7 +11,7 @@ export async function POST(req, res) {
 
   const st =
     `/pg/v1/status/${merchantId}/${transactionId}` +
-    process.env.NEXT_PUBLIC_SALT_KEY;
+    `9d9dacfb-e754-4cd8-ada5-15535c8a5e30`;
   // console.log(st)
   const dataSha256 = sha256(st);
 
@@ -25,7 +25,7 @@ export async function POST(req, res) {
 
   const options = {
     method: "GET",
-    url: `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/${merchantId}/${transactionId}`,
+    url: `https://api.phonepe.com/apis/hermes/pg/v1/status/${merchantId}/${transactionId}`,
     headers: {
       accept: "application/json",
       "Content-Type": "application/json",

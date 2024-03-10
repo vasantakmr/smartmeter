@@ -43,7 +43,7 @@ const Pay = () => {
     const transactionid = "Tr-" + uuidv4().toString(36).slice(-6);
 
     const payload = {
-      merchantId: "PGTESTPAYUAT93",
+      merchantId: "M22HWWC6SJT62",
       merchantTransactionId: transactionid,
       merchantUserId: 'MUID-' + uuidv4().toString(36).slice(-6),
       amount: customAmount ? (customAmount * 100) : (amount * 100),
@@ -65,7 +65,7 @@ const Pay = () => {
 
 
     const fullURL =
-      dataBase64 + "/pg/v1/pay" + "875126e4-5a13-4dae-ad60-5b8c8b629035";
+      dataBase64 + "/pg/v1/pay" + "9d9dacfb-e754-4cd8-ada5-15535c8a5e30";
     const dataSha256 = sha256(fullURL);
 
     const checksum = dataSha256 + "###" + "1";
@@ -74,7 +74,7 @@ const Pay = () => {
 
 
     const UAT_PAY_API_URL =
-      "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
+      "https://api.phonepe.com/apis/hermes/pg/v1/pay";
 
 
     const response = await axios.post(
