@@ -6,7 +6,9 @@ import { redirect } from "next/navigation";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 
- 
+
+const HOST_URL = "http://localhost:3000"
+
 const Pay = () => {
 
   const router = useRouter();
@@ -47,9 +49,9 @@ const Pay = () => {
       merchantTransactionId: transactionid,
       merchantUserId: 'MUID-' + uuidv4().toString(36).slice(-6),
       amount: customAmount ? (customAmount * 100) : (amount * 100),
-      redirectUrl: `https://smartmeter-live.vercel.app/api/status/${transactionid}`,
+      redirectUrl: HOST_URL + `/api/status/${transactionid}`,
       redirectMode: "POST",
-      callbackUrl: `https://smartmeter-live.vercel.app/api/status/${transactionid}`,
+      callbackUrl: HOST_URL + `/api/status/${transactionid}`,
       mobileNumber: mobileNumber,
       paymentInstrument: {
         type: "PAY_PAGE",
@@ -78,7 +80,7 @@ const Pay = () => {
 
 
     const response = await axios.post(
-      "https://smartmeter-live.vercel.app/api/pay",
+      HOST_URL+"/api/pay",
       {
         mobileNumber: mobileNumber,
         customAmount: customAmount,

@@ -3,6 +3,7 @@ import sha256 from "crypto-js/sha256";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 
+const HOST_URL = "http://localhost:3000"
 
 export async function POST(req, res) {
 
@@ -15,9 +16,9 @@ export async function POST(req, res) {
         merchantTransactionId: transactionid,
         merchantUserId: 'MUID-' + uuidv4().toString(36).slice(-6),
         amount: body.customAmount ? (body.customAmount * 100) : (body.amount * 100),
-        redirectUrl: `https://smartmeter-live.vercel.app/api/status/${transactionid}`,
+        redirectUrl: HOST_URL + `/api/status/${transactionid}`,
         redirectMode: "POST",
-        callbackUrl: `https://smartmeter-live.vercel.app/api/status/${transactionid}`,
+        callbackUrl: HOST_URL + `/api/status/${transactionid}`,
         mobileNumber: body.mobileNumber,
         paymentInstrument: {
             type: "PAY_PAGE",
@@ -70,7 +71,7 @@ export async function POST(req, res) {
             { status: 200 }
         )
 
-    else return NextResponse.redirect("https://smartmeter-live.vercel.app/failure", {
+    else return NextResponse.redirect(HOST_URL + "/failure", {
         // a 301 status is required to redirect from a POST to a GET route
         status: 301,
     });
